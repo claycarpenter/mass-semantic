@@ -1,0 +1,46 @@
+
+<header>
+  <h1>Snippet name goes here</h1>
+</header>
+
+<div class="curation-controls">
+  <button class="btn btn-sm btn-default">Up</button>
+  <span>25</span>
+  <button class="btn btn-sm btn-default">Down</button>
+  <button class="btn btn-sm btn-default">Favorite</button>
+</div>
+
+<div class="details">
+  <p>Snippet description goes here</p>
+  <p>Supports rich formatting provided by <strong>Markdown</strong>.</p>
+  <ul>
+    <li>Tag One</li>
+    <li>Tag Two</li>
+    <li>Tag Three</li>
+  </ul>
+  <p>
+    Johnny Username &amp; 6 others
+  </p>
+</div>
+
+<pre><code>&lt;nav&gt;
+	&lt;ul&gt;
+		&lt;li&gt;&lt;a href=&ldquo;/&rdquo;&gt;Home&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&ldquo;/popular&rdquo;&gt;Popular&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&ldquo;/latest&rdquo;&gt;Most Recent&lt;/a&gt;&lt;/li&gt;
+		&lt;li&gt;&lt;a href=&ldquo;/about&rdquo;&gt;About Me&lt;/a&gt;&lt;/li&gt;
+	&lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+
+<div class="curation-controls">
+  <button class="btn btn-md btn-default">Edit</button>
+  <button class="btn btn-md btn-default">Flag</button>
+</div>
+
+<section>
+  <h2>Comments</h2>
+
+  <% 5.times do %>
+    <%= render "partials/list_comment_short" %>
+  <% end %>
+</section>

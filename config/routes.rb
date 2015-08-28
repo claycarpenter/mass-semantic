@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'snippets/show'
+
   get 'profiles/public'
 
   get 'profiles/private'
