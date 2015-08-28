@@ -25,32 +25,7 @@
   </header>
 
   <!-- Articles list -->
-  <article>
-    <header>
-      <a href="/snippets/1" class="big-link">Snippet name goes here</a>
-    </header>
-    <p>
-      <strong>34</strong>
-      <small>votes</small>
-    </p>
-    <p>
-      <strong>23</strong>
-      <small>faves</small>
-    </p>
-    <p>
-      Summary of snippet description to help users understand what’s offered.
-    </p>
-    <ul>
-      <li>Tag One</li>
-      <li>Tag Two</li>
-      <li>Tag Three</li>
-    </ul>
-    <footer>
-      <time datetime="2001-05-15 19:00">4 days ago</time>
-      /
-      <cite>Johnny User</cite>
-    </footer>
-  </article>
+  <%= render "partials/list_snippet" %>
 
   <footer>
     <!-- Pagination goes here -->
