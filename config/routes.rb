@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'search/index'
+
   get 'auth/sign_in'
 
   get 'auth/sign_up'
@@ -17,6 +19,9 @@ Rails.application.routes.draw do
 
   # Semantic routes
   get 'semantic' => 'semantic#benefits'
+
+  # Search routes
+  get 'search' => 'search#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
