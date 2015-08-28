@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'auth/sign_in'
+
+  get 'auth/sign_up'
+
   get 'semantic/benefits'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -7,6 +11,11 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
+  # Authentication routes
+  get 'sign-in' => 'auth#sign_in'
+  get 'sign-up' => 'auth#sign_up'
+
+  # Semantic routes
   get 'semantic' => 'semantic#benefits'
 
   # Example of regular route:
