@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  get 'profile/public'
+  get 'profiles/public'
 
-  get 'profile/private'
+  get 'profiles/private'
 
   get 'search/index'
 

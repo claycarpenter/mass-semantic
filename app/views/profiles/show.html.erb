@@ -1,0 +1,74 @@
+
+<section>
+  <h1>Johnny Username</h1>
+  <img src="http://lorempixel.com/g/200/200/" alt="Johnny Username">
+  <ul>
+    <li><a href="http://example.com/">Peronal homepage</a></li>
+    <li><a href="http://example.com/">GitHub</a></li>
+    <li><a href="http://example.com/">Stack Exchange</a></li>
+  </ul>
+  <p>Member for: 6 months</p>
+  <p>Last active: 2 days ago</p>
+
+  <% if @is_private %>
+    <a href="/profile/edit" class="btn btn-md btn-default">Edit Profile</a>
+  <% end %>
+</section>
+
+<nav>
+  <ul>
+    <li><a href="/#tabName">Authored</a></li>
+    <li><a href="/#tabName">Edited</a></li>
+    <li><a href="/#tabName">Comments</a></li>
+    <% if @is_private %>
+      <li><a href="/#tabName">Votes</a></li>
+      <li><a href="/#tabName">Favorites</a></li>
+    <% end %>
+  </ul>
+
+<section>
+  <h1>Authored</h1>
+  <% 3.times do %>
+    <%= render "partials/list_snippet" %>
+  <% end %>
+</section>
+
+<section>
+  <h1>Edited</h1>
+  <% 3.times do %>
+    <%= render "partials/list_snippet" %>
+  <% end %>
+</section>
+
+<section>
+  <h1>Comments</h1>
+  <% 8.times do %>
+    <%= render "partials/list_comment" %>
+  <% end %>
+</section>
+
+<% if @is_private %>
+  <section>
+    <h1>Votes</h1>
+    <ul>
+      <% 8.times do %>
+        <li>
+          <p>
+            <strong>Up</strong> vote for <a href="/snippets/1" class="big-link">Snippet name goes here</a>
+          </p>
+
+          <time datetime="2001-05-15 19:00">4 days ago</time>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section>
+    <h1>Favorites</h1>
+    <ul>
+      <% 3.times do %>
+        <%= render "partials/list_snippet" %>
+      <% end %>
+    </ul>
+  </section>
+<% end %>

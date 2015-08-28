@@ -1,4 +1,4 @@
-class ProfileController < ApplicationController
+class ProfilesController < ApplicationController
   def public
     @is_private = false
 
@@ -7,7 +7,7 @@ class ProfileController < ApplicationController
 
   def private
     @is_private = true
-    
+
     render :show
   end
 
