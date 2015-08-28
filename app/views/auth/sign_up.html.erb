@@ -13,7 +13,11 @@
     <div class="col-sm-6">
       <h1>GitHub</h1>
       <p>Sign in with your GitHub account</p>
-      <button class="btn btn-lg btn-primary">Sign Up</button>
+      <a
+        href="https://github.com/login/oauth/authorize?scope=user:email&client_id=<%= ENV['github_client_id'] %>" 
+        class="btn btn-lg btn-primary">
+        Sign Up
+      </a>
     </div>
     <div class="col-sm-6">
       <h1>Stack Exchange</h1>

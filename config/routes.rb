@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'gh_auth/callback'
+
+  get 'gh_auth/sign_in'
+
   get 'snippets/show'
 
   get 'profiles/public'

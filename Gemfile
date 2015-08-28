@@ -6,6 +6,9 @@ gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+# REST client
+gem 'rest-client'
+
 # Use Bootstrap (Sass version)
 gem 'bootstrap-sass', '~> 3.3.5'
 
