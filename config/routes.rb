@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'profile/public'
+
+  get 'profile/private'
+
   get 'search/index'
 
   get 'auth/sign_in'
