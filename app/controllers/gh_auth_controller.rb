@@ -18,11 +18,14 @@ class GhAuthController < ApplicationController
     access_token = JSON.parse(result)['access_token']
 
     # fetch user information
-    auth_result = JSON.parse(RestClient.get('https://api.github.com/user',
+    user_result = JSON.parse(RestClient.get('https://api.github.com/user',
                                         {:params => {:access_token => access_token}}))
 
-    logger.debug auth_result
-    logger.debug "Username: #{auth_result["login"]}"
+    logger.debug user_result
+    logger.debug "Username: #{user_result["login"]}"
+    logger.debug "Display name: #{user_result["name"]}"
+
+    @display_name = user_result["name"]
   end
 
   def sign_in

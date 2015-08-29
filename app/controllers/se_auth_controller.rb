@@ -28,8 +28,11 @@ class SeAuthController < ApplicationController
     me_url = "https://api.stackexchange.com/2.2/me?key=#{ENV['stackex_client_key']}&site=stackoverflow&order=desc&sort=reputation&access_token=#{access_token}&filter=default"
     logger.debug "Request URL: #{me_url}"
     begin
-      result = RestClient.get(me_url, :accept => :json)
-      logger.debug result
+      result = JSON.parse(RestClient.get(me_url, :accept => :json))
+      # logger.debug result
+      logger.debug result["items"][0]
+      @display_name = result["items"][0]["display_name"]
+      logger.debug "Display name: #{@display_name}"
     rescue => error
       logger.error error
       logger.error error.inspect
