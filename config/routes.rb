@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'se_auth/callback'
+
   get 'gh_auth/callback'
 
   get 'gh_auth/sign_in'
