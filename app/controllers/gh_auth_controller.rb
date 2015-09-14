@@ -25,6 +25,15 @@ class GhAuthController < ApplicationController
     logger.debug "Username: #{user_result["login"]}"
     logger.debug "Display name: #{user_result["name"]}"
 
+    user_id = user_result["login"]
+    logger.debug "Looking for registered user with gh user id '#{user_id}'"
+
+    registered_user = User.find_by(gh_user_id: user_id)
+
+    if !registered_user.nil?
+      logger.debug "Found user: #{registered_user.inspect}"
+    end
+
     @display_name = user_result["name"]
   end
 

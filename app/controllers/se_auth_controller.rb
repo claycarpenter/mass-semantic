@@ -69,10 +69,22 @@ class SeAuthController < ApplicationController
         if !temp_display_name.empty?
           is_name_found = true
           @display_name = result["items"][0]["display_name"]
+          logger.debug "Collected display name"
+          user_id = result["items"][0]["account_id"]
+          logger.debug "account id: #{user_id}"
         end
       end
 
       logger.debug "Display name: #{@display_name}"
+
+      logger.debug "Looking for registered user with se user id '#{user_id}'"
+
+      registered_user = User.find_by(se_user_id: user_id)
+
+      if !registered_user.nil?
+        logger.debug "Found user: #{registered_user.inspect}"
+      end
+
 
     rescue => error
       logger.error error

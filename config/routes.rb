@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
   get 'se_auth/callback'
 
   get 'gh_auth/callback'
