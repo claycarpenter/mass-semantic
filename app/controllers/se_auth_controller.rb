@@ -6,6 +6,13 @@ class SeAuthController < ApplicationController
     session_code = params[:code]
     logger.debug "Received this code from SE: #{session_code}"
 
+    if params.has_key? "error"
+      logger.debug "Found error: #{params[:error]}"
+      redirect_to "/sign-in"
+
+      return
+    end
+
     # ... and POST it back to Stack Exchange
     result = RestClient.post('https://stackexchange.com/oauth/access_token',
                             {:client_id => ENV['stackex_client_id'],
@@ -26,7 +33,10 @@ class SeAuthController < ApplicationController
 
       # Sites Query
       sites_url = "https://api.stackexchange.com/2.2/sites?pagesize=1000&filter=!SmNnbu6IMQSQAW0(lU&key=#{ENV['stackex_client_key']}"
-      sites_result = JSON.parse(RestClient.get(sites_url, :accept => :json))
+
+      raw_result = RestClient.get(sites_url, :accept => :json)
+      puts raw_result.inspect
+      sites_result = JSON.parse(raw_result)
 
       logger.debug sites_result["items"]
       network_sites = sites_result["items"]
@@ -35,7 +45,7 @@ class SeAuthController < ApplicationController
       # Associated Query
       associated_url = me_url = "https://api.stackexchange.com/2.2/me/associated?key=#{ENV['stackex_client_key']}&access_token=#{access_token}"
       associated_results = JSON.parse(RestClient.get(associated_url, :accept => :json))
-      logger.debug associated_results["items"]
+      # logger.debug associated_results["items"]
       associated_accounts = associated_results["items"]
       logger.debug "Associated accounts count: #{associated_accounts.length}"
 
@@ -43,7 +53,7 @@ class SeAuthController < ApplicationController
 
       associated_accounts.each do |account|
         # logger.debug account.inspect
-        logger.debug account["site_name"]
+        # logger.debug account["site_name"]
 
         network_sites.each do |site|
           if account["site_url"] == site["site_url"]
@@ -63,7 +73,7 @@ class SeAuthController < ApplicationController
 
         result = JSON.parse(RestClient.get(me_url, :accept => :json))
         # logger.debug result
-        logger.debug result["items"][0]
+        # logger.debug result["items"][0]
         temp_display_name = result["items"][0]["display_name"].strip
 
         if !temp_display_name.empty?

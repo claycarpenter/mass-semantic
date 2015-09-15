@@ -13,9 +13,12 @@ class GhAuthController < ApplicationController
                              :code => session_code},
                              :accept => :json)
 
+    logger.debug "Have access token result"
     logger.debug result.inspect
 
     access_token = JSON.parse(result)['access_token']
+
+    logger.debug "Using this access token: #{access_token}"
 
     # fetch user information
     user_result = JSON.parse(RestClient.get('https://api.github.com/user',
@@ -39,7 +42,7 @@ class GhAuthController < ApplicationController
     else
       logger.debug "Could not find user; auth error."
 
-      redirect_to "sign_in"
+      redirect_to "/sign-in"
     end
   end
 
