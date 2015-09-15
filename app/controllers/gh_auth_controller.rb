@@ -24,6 +24,7 @@ class GhAuthController < ApplicationController
     logger.debug user_result
     logger.debug "Username: #{user_result["login"]}"
     logger.debug "Display name: #{user_result["name"]}"
+    @display_name = user_result["name"]
 
     user_id = user_result["login"]
     logger.debug "Looking for registered user with gh user id '#{user_id}'"
@@ -32,9 +33,14 @@ class GhAuthController < ApplicationController
 
     if !registered_user.nil?
       logger.debug "Found user: #{registered_user.inspect}"
-    end
 
-    @display_name = user_result["name"]
+      # FIXME Pretty sure this is the wrong way to redirect to a user profile
+      redirect_to "/users/#{registered_user.id}"
+    else
+      logger.debug "Could not find user; auth error."
+
+      redirect_to "sign_in"
+    end
   end
 
   def sign_in

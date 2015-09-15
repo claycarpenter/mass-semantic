@@ -83,9 +83,14 @@ class SeAuthController < ApplicationController
 
       if !registered_user.nil?
         logger.debug "Found user: #{registered_user.inspect}"
+
+        # FIXME Pretty sure this is the wrong way to redirect to a user profile
+        redirect_to "/users/#{registered_user.id}"
+      else
+        logger.debug "Could not find user; auth error."
+
+        redirect_to "sign_in"
       end
-
-
     rescue => error
       logger.error error
       logger.error error.inspect
