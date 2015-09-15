@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'login' => 'user_sessions#new'
+  get 'usersessions/github' => 'user_sessions#github'
+  get 'usersessions/github/callback' => 'user_sessions#github_callback'
 
   get 'users/new'
   get 'users/:id' => 'users#show', as: :user
