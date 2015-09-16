@@ -89,7 +89,7 @@ class UserSessionsController < ApplicationController
                             {:client_id => ENV['stackex_client_id'],
                              :client_secret => ENV['stackex_client_secret'],
                              :code => session_code,
-                            :redirect_uri => "http://localhost:3000/se_auth/callback"},
+                            :redirect_uri => "http://localhost:3000/usersessions/stackex/callback"},
                              :accept => :json)
 
     logger.debug result.inspect
