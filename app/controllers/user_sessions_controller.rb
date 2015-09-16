@@ -2,6 +2,12 @@ class UserSessionsController < ApplicationController
   def new
   end
 
+  def destroy
+    log_out
+
+    redirect_to '/'
+  end
+
   def github
     logger.debug "Redirecting client to GitHub"
 
@@ -47,6 +53,9 @@ class UserSessionsController < ApplicationController
 
     if !registered_user.nil?
       logger.debug "Found user: #{registered_user.inspect}"
+
+      # Log in user
+      log_in registered_user
 
       redirect_to user_url(id: registered_user.id)
     else
@@ -150,6 +159,9 @@ class UserSessionsController < ApplicationController
 
       if !registered_user.nil?
         logger.debug "Found user: #{registered_user.inspect}"
+
+        # Log in user
+        log_in registered_user
 
         # FIXME Pretty sure this is the wrong way to redirect to a user profile
         redirect_to user_url(id: registered_user.id)

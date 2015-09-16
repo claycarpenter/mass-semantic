@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   # Authentication routes
   get 'login' => 'user_sessions#new'
+  delete 'logout' => 'user_sessions#destroy'
   get 'usersessions/github' => 'user_sessions#github'
   get 'usersessions/github/callback' => 'user_sessions#github_callback'
   get 'usersessions/stackex' => 'user_sessions#stackex'

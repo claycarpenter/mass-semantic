@@ -18,7 +18,11 @@
         <li><a href="/search">Search</a></li>
         <li><a href="/">Tags</a></li>
         <li><a href="/semantic">Why Semantic</a></li>
-        <li><a href="/login">Login or Register</a></li>
+        <% if logged_in? %>
+          <li><%= link_to "Log out", logout_path, method: :delete %></li>
+        <% else %>
+          <li><a href="/login">Login or Register</a></li>
+        <% end %>
       </ul>
     </div>
   </div>
