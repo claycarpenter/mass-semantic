@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   def github
     logger.debug "Redirecting client to GitHub"
 
-    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ ENV['github_client_id']}"
+    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ ENV['github_client_id']}&redirect_uri=http://localhost:3000/usersessions/github/callback"
 
     redirect_to oauth_url
   end
