@@ -4,7 +4,14 @@ module UserSessionsHelper
   end
 
   def logged_in?
-    not session[:user_id].nil?
+    not current_user.nil?
+  end
+
+  def current_user
+    # If the current user is already defined; return that.
+    # Otherwise, look up the current user via a session's user id.
+    # If session id is undefined or user is not found for given id, return nil.
+    @current_user ||= User.find_by(id: session[:user_id])
   end
 
   def log_out
