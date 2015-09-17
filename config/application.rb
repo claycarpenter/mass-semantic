@@ -10,6 +10,16 @@ Bundler.require(*Rails.groups)
 ENV.update YAML.load_file('config/application.yml')[Rails.env] rescue {}
 
 module MassSemantic
+  class Settings
+    # Inspired by:
+    # http://blog.carbonfive.com/2011/11/23/configuration-for-rails-the-right-way/#comment-4215
+    def load(file_path)
+      raw_config = File.read(file_path)
+      erb_config = ERB.new(raw_config).result
+      config = YAML.load(erb_config)[Rails.env]
+    end
+  end
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -25,5 +35,11 @@ module MassSemantic
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Load configuration
+    settings = MassSemantic::Settings.new
+
+    # FIXME This will probably break in a different environment.
+    config.app_config = settings.load("config/application.yml")
   end
 end
