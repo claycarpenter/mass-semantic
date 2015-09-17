@@ -6,7 +6,8 @@ gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
-gem 'recursive-open-struct'
+# Use Global for configuration data parsing/loading
+gem 'global'
 
 # REST client
 gem 'rest-client'
