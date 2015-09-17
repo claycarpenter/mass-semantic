@@ -1,10 +1,10 @@
 defaults: &defaults
-  github_client_id: "845418bb1a00b1aaf8c7"
-  stackex_client_id: "5468"
-  stackex_client_key: "2xLiDuoyp)zKwxapJzzO1g(("
 
 development:
   <<: *defaults
+  github_client_id: "845418bb1a00b1aaf8c7"
+  stackex_client_id: "5468"
+  stackex_client_key: "2xLiDuoyp)zKwxapJzzO1g(("
 
 test:
   <<: *defaults
