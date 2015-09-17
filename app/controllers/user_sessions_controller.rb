@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   def github
     logger.debug "Redirecting client to GitHub"
 
-    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ ENV['github_client_id']}&redirect_uri=http://localhost:3000/usersessions/github/callback"
+    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ MassSemantic::Application::config.app_config.github.client_id}&redirect_uri=http://localhost:3000/usersessions/github/callback"
 
     redirect_to oauth_url
   end
@@ -25,7 +25,7 @@ class UserSessionsController < ApplicationController
 
     # ... and POST it back to GitHub
     result = RestClient.post('https://github.com/login/oauth/access_token',
-                            {:client_id => ENV['github_client_id'],
+                            {:client_id => MassSemantic::Application::config.app_config.github.client_id,
                              :client_secret => ENV['github_client_secret'],
                              :code => session_code},
                              :accept => :json)

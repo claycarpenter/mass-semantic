@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+# require 'recursive-open-struct'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,7 +17,8 @@ module MassSemantic
     def load(file_path)
       raw_config = File.read(file_path)
       erb_config = ERB.new(raw_config).result
-      config = YAML.load(erb_config)[Rails.env]
+      config_hash = YAML.load(erb_config)[Rails.env]
+      config = RecursiveOpenStruct.new(config_hash, :recurse_over_arrays => true)
     end
   end
 
