@@ -6,6 +6,8 @@ gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+gem 'recursive-open-struct'
+
 # REST client
 gem 'rest-client'
 

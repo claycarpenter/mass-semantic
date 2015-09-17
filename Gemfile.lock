@@ -113,6 +113,7 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    recursive-open-struct (0.6.5)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -164,6 +165,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.2.3)
+  recursive-open-struct
   rest-client
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
