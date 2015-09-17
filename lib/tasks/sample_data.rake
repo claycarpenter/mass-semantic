@@ -1,3 +1,6 @@
+# Inspired by this post by SO user Agis:
+# http://stackoverflow.com/a/24496452/1148628
+
 namespace :db do
   desc 'Drop, create, migrate, seed and populate sample data'
   task prepare: [:drop, :create, :migrate, :seed, :populate_sample_data] do
