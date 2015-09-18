@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   def github
     logger.debug "Redirecting client to GitHub"
 
-    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ MassSemantic::Application::config.app_config.github.client_id}&redirect_uri=http://localhost:3000/usersessions/github/callback"
+    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ Global.application.oauth.github.client_id}&redirect_uri=http://localhost:3000/usersessions/github/callback"
 
     redirect_to oauth_url
   end
@@ -25,8 +25,8 @@ class UserSessionsController < ApplicationController
 
     # ... and POST it back to GitHub
     result = RestClient.post('https://github.com/login/oauth/access_token',
-                            {:client_id => MassSemantic::Application::config.app_config.github.client_id,
-                             :client_secret => ENV['github_client_secret'],
+                            {:client_id => Global.application.oauth.github.client_id,
+                             :client_secret => Global.application.oauth.github.secret_key,
                              :code => session_code},
                              :accept => :json)
 
@@ -68,7 +68,7 @@ class UserSessionsController < ApplicationController
   def stackex
     logger.debug "Redirecting client to Stack Exchane"
 
-    oauth_url = "https://stackexchange.com/oauth?client_id=#{ENV['stackex_client_id']}&scope=&redirect_uri=http://localhost:3000/usersessions/stackex/callback"
+    oauth_url = "https://stackexchange.com/oauth?client_id=#{Global.application.oauth.stackex.client_id}&scope=&redirect_uri=http://localhost:3000/usersessions/stackex/callback"
 
     redirect_to oauth_url
   end
@@ -86,8 +86,8 @@ class UserSessionsController < ApplicationController
 
     # ... and POST it back to Stack Exchange
     result = RestClient.post('https://stackexchange.com/oauth/access_token',
-                            {:client_id => ENV['stackex_client_id'],
-                             :client_secret => ENV['stackex_client_secret'],
+                            {:client_id => Global.application.oauth.stackex.client_id,
+                             :client_secret => Global.application.oauth.stackex.secret_key,
                              :code => session_code,
                             :redirect_uri => "http://localhost:3000/usersessions/stackex/callback"},
                              :accept => :json)
@@ -102,7 +102,7 @@ class UserSessionsController < ApplicationController
     begin
 
       # Sites Query
-      sites_url = "https://api.stackexchange.com/2.2/sites?pagesize=1000&filter=!SmNnbu6IMQSQAW0(lU&key=#{ENV['stackex_client_key']}"
+      sites_url = "https://api.stackexchange.com/2.2/sites?pagesize=1000&filter=!SmNnbu6IMQSQAW0(lU&key=#{Global.application.oauth.stackex.client_key}"
 
       raw_result = RestClient.get(sites_url, :accept => :json)
       sites_result = JSON.parse(raw_result)
@@ -111,7 +111,7 @@ class UserSessionsController < ApplicationController
       logger.debug "Network sites count: #{network_sites.length}"
 
       # Associated Query
-      associated_url = me_url = "https://api.stackexchange.com/2.2/me/associated?key=#{ENV['stackex_client_key']}&access_token=#{access_token}"
+      associated_url = me_url = "https://api.stackexchange.com/2.2/me/associated?key=#{Global.application.oauth.stackex.client_key}&access_token=#{access_token}"
       associated_results = JSON.parse(RestClient.get(associated_url, :accept => :json))
       # logger.debug associated_results["items"]
       associated_accounts = associated_results["items"]
@@ -136,7 +136,7 @@ class UserSessionsController < ApplicationController
       while !is_name_found && !api_site_keys.empty?
         # Me (user details) Query
         site_key = api_site_keys.pop
-        me_url = "https://api.stackexchange.com/2.2/me?key=#{ENV['stackex_client_key']}&site=#{site_key}&order=desc&sort=reputation&access_token=#{access_token}&filter=default"
+        me_url = "https://api.stackexchange.com/2.2/me?key=#{Global.application.oauth.stackex.client_key}&site=#{site_key}&order=desc&sort=reputation&access_token=#{access_token}&filter=default"
         logger.debug "Request URL: #{me_url}"
 
         result = JSON.parse(RestClient.get(me_url, :accept => :json))
