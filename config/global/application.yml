@@ -1,13 +1,21 @@
 defaults: &defaults
   name: Mass Semantic
+  oauth: &oauth
+    github: &github
+      callback: /usersessions/github/callback
+    stackex: &stackex
+      callback: /usersessions/stackex/callback
 
 development:
   <<: *defaults
   oauth:
+    <<: *oauth
     github:
+      <<: *github
       client_id: 845418bb1a00b1aaf8c7
       secret_key: <%= ENV['github_client_secret'] %>
     stackex:
+      <<: *stackex
       client_id: 5468
       client_key: 2xLiDuoyp)zKwxapJzzO1g((
       secret_key: <%= ENV['stackex_client_secret'] %>
