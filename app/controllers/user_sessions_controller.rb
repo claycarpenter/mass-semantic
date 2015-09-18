@@ -19,37 +19,15 @@ class UserSessionsController < ApplicationController
   def github_callback
     logger.debug "Received GH callback."
 
-    session_code = params[:code]
-    logger.debug 'Test of logging from callback.'
-    logger.debug "Received this code from GH: #{session_code}"
+    callback_code = params[:code]
+    logger.debug "Received this code from GH: #{callback_code}"
 
-    # ... and POST it back to GitHub
-    result = RestClient.post('https://github.com/login/oauth/access_token',
-                            {:client_id => Global.application.oauth.github.client_id,
-                             :client_secret => Global.application.oauth.github.secret_key,
-                             :code => session_code},
-                             :accept => :json)
+    github_handler = UserSessionsHelper::GitHubOAuthHandler.new
+    oauth_result = github_handler.handle(callback_code)
 
-    logger.debug "Have access token result"
-    logger.debug result.inspect
+    logger.debug "Looking for registered user with gh user id '#{oauth_result.user_id}'"
 
-    access_token = JSON.parse(result)['access_token']
-
-    logger.debug "Using this access token: #{access_token}"
-
-    # fetch user information
-    user_result = JSON.parse(RestClient.get('https://api.github.com/user',
-                                        {:params => {:access_token => access_token}}))
-
-    logger.debug user_result
-    logger.debug "Username: #{user_result["login"]}"
-    logger.debug "Display name: #{user_result["name"]}"
-    @display_name = user_result["name"]
-
-    user_id = user_result["login"]
-    logger.debug "Looking for registered user with gh user id '#{user_id}'"
-
-    registered_user = User.find_by(gh_user_id: user_id)
+    registered_user = User.find_by(gh_user_id: oauth_result.user_id)
 
     if !registered_user.nil?
       logger.debug "Found user: #{registered_user.inspect}"
