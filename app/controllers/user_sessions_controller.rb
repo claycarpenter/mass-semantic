@@ -11,7 +11,7 @@ class UserSessionsController < ApplicationController
   def github
     logger.debug "Redirecting client to GitHub"
 
-    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ Global.application.oauth.github.client_id}&redirect_uri=http://localhost:3000/usersessions/github/callback"
+    oauth_url = "https://github.com/login/oauth/authorize?scope=user:email&client_id=#{ Global.application.oauth.github.client_id}&redirect_uri=#{Global.hosts.web}/usersessions/github/callback"
 
     redirect_to oauth_url
   end
@@ -68,7 +68,7 @@ class UserSessionsController < ApplicationController
   def stackex
     logger.debug "Redirecting client to Stack Exchane"
 
-    oauth_url = "https://stackexchange.com/oauth?client_id=#{Global.application.oauth.stackex.client_id}&scope=&redirect_uri=http://localhost:3000/usersessions/stackex/callback"
+    oauth_url = "https://stackexchange.com/oauth?client_id=#{Global.application.oauth.stackex.client_id}&scope=&redirect_uri=#{Global.hosts.web}/usersessions/stackex/callback"
 
     redirect_to oauth_url
   end
@@ -89,7 +89,7 @@ class UserSessionsController < ApplicationController
                             {:client_id => Global.application.oauth.stackex.client_id,
                              :client_secret => Global.application.oauth.stackex.secret_key,
                              :code => session_code,
-                            :redirect_uri => "http://localhost:3000/usersessions/stackex/callback"},
+                            :redirect_uri => "#{Global.hosts.web}/usersessions/stackex/callback"},
                              :accept => :json)
 
     logger.debug result.inspect
