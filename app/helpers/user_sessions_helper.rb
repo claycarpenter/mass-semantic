@@ -19,12 +19,12 @@ module UserSessionsHelper
   end
 
   class OAuthData
-    attr_accessor :oauth_service, :user_id, :username, :full_name, :email
+    attr_accessor :access_token, :oauth_service, :user_id, :username, :full_name, :email
   end
 
   class GitHubOAuthHandler
-    def handle(callback_code)
-      # ... and POST it back to GitHub
+    def get_access_token(callback_code)
+      # Acquire access token by sending callback code back to GitHub
       result = RestClient.post('https://github.com/login/oauth/access_token',
                               {:client_id => Global.application.oauth.github.client_id,
                                :client_secret => Global.application.oauth.github.secret_key,
@@ -32,17 +32,27 @@ module UserSessionsHelper
                                :accept => :json)
 
       access_token = JSON.parse(result)['access_token']
+    end
 
-      # fetch user information
+    def get_user_details(oauth_data)
       user_result = JSON.parse(RestClient.get('https://api.github.com/user',
-                                          {:params => {:access_token => access_token}}))
+                                          {:params => {:access_token => oauth_data.access_token}}))
 
-      oauth_data = OAuthData.new
-      oauth_data.oauth_service = :github
       oauth_data.user_id = user_result["login"]
       oauth_data.username = user_result["login"]
       oauth_data.full_name = user_result["name"]
       oauth_data.email = user_result["email"]
+    end
+
+    def handle(callback_code)
+      oauth_data = OAuthData.new
+      oauth_data.oauth_service = :github
+
+      # Acquire access token
+      oauth_data.access_token = self.get_access_token(callback_code)
+
+      # Fetch user information
+      self.get_user_details(oauth_data)
 
       return oauth_data
     end
