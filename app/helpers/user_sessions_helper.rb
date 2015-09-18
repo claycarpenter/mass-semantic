@@ -59,8 +59,8 @@ module UserSessionsHelper
   end
 
   class StackExOAuthHandler
-    def handle(callback_code)
-      # ... and POST it back to Stack Exchange
+    def get_access_token(callback_code)
+      # Acquire access token by sending callback code back to GitHub
       result = RestClient.post('https://stackexchange.com/oauth/access_token',
                               {:client_id => Global.application.oauth.stackex.client_id,
                                :client_secret => Global.application.oauth.stackex.secret_key,
@@ -71,7 +71,9 @@ module UserSessionsHelper
       result_parser = /access_token\=(?<access_token>[^\&]*)/
       parsed = result_parser.match result
       access_token = parsed[:access_token]
+    end
 
+    def get_user_details(oauth_data)
       # Sites Query
       sites_url = "https://api.stackexchange.com/2.2/sites?pagesize=1000&filter=!SmNnbu6IMQSQAW0(lU&key=#{Global.application.oauth.stackex.client_key}"
 
@@ -81,7 +83,7 @@ module UserSessionsHelper
       network_sites = sites_result["items"]
 
       # Associated Query
-      associated_url = me_url = "https://api.stackexchange.com/2.2/me/associated?key=#{Global.application.oauth.stackex.client_key}&access_token=#{access_token}"
+      associated_url = me_url = "https://api.stackexchange.com/2.2/me/associated?key=#{Global.application.oauth.stackex.client_key}&access_token=#{oauth_data.access_token}"
       associated_results = JSON.parse(RestClient.get(associated_url, :accept => :json))
       associated_accounts = associated_results["items"]
 
@@ -99,7 +101,7 @@ module UserSessionsHelper
       while !is_name_found && !api_site_keys.empty?
         # Me (user details) Query
         site_key = api_site_keys.pop
-        me_url = "https://api.stackexchange.com/2.2/me?key=#{Global.application.oauth.stackex.client_key}&site=#{site_key}&order=desc&sort=reputation&access_token=#{access_token}&filter=default"
+        me_url = "https://api.stackexchange.com/2.2/me?key=#{Global.application.oauth.stackex.client_key}&site=#{site_key}&order=desc&sort=reputation&access_token=#{oauth_data.access_token}&filter=default"
 
         result = JSON.parse(RestClient.get(me_url, :accept => :json))
         temp_display_name = result["items"][0]["display_name"].strip
@@ -113,11 +115,20 @@ module UserSessionsHelper
         end
       end
 
-      oauth_data = OAuthData.new
-      oauth_data.oauth_service = :github
       oauth_data.user_id = user_id
       oauth_data.full_name = display_name
       # StackEx doesn't provide email via APIs.
+    end
+
+    def handle(callback_code)
+      oauth_data = OAuthData.new
+      oauth_data.oauth_service = :stackex
+
+      # Acquire access token
+      oauth_data.access_token = self.get_access_token(callback_code)
+
+      # Fetch user information
+      self.get_user_details(oauth_data)
 
       return oauth_data
     end
