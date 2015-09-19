@@ -42,9 +42,22 @@ class UsersController < ApplicationController
   end
 
   def show
-    id = params[:id]
+    @user = User.find(params[:id])
+  end
 
-    @user = User.find(id)
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update_attributes(user_params)
+      render "show"
+    else
+      # Errors in persisting updates; return to form with errors.
+      render "edit"
+    end
   end
 
   def destroy
