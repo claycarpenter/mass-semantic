@@ -31,6 +31,8 @@ class UsersController < ApplicationController
     logger.debug "Saving this user data: #{@user.inspect}"
 
     if @user.save
+      log_in @user
+      
       redirect_to @user
     else
       render "new"
