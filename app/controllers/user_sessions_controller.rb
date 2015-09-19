@@ -22,10 +22,11 @@ class UserSessionsController < ApplicationController
     callback_code = params[:code]
     logger.debug "Received this code from GH: #{callback_code}"
 
+    # Retrieve OAuth user data, including access token
     github_handler = UserSessionsHelper::GitHubOAuthHandler.new
     oauth_result = github_handler.handle(callback_code)
 
-    logger.debug oauth_result.inspect
+    store_oauth(oauth_result)
 
     logger.debug "Looking for registered user with gh user id '#{oauth_result.user_id}'"
 
@@ -41,7 +42,7 @@ class UserSessionsController < ApplicationController
     else
       logger.debug "Could not find user; auth error."
 
-      redirect_to "/sign-in"
+      redirect_to "/users/new"
     end
   end
 
@@ -68,6 +69,8 @@ class UserSessionsController < ApplicationController
       stackex_handler = UserSessionsHelper::StackExOAuthHandler.new
       oauth_result = stackex_handler.handle(callback_code)
 
+      store_oauth(oauth_result)
+
       logger.debug "Looking for registered user with se user id '#{oauth_result.user_id}'"
 
       registered_user = User.find_by(se_user_id: oauth_result.user_id)
@@ -83,7 +86,7 @@ class UserSessionsController < ApplicationController
       else
         logger.debug "Could not find user; auth error."
 
-        redirect_to "sign_in"
+        redirect_to "/users/new"
       end
     rescue => error
       logger.error error
