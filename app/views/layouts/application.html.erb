@@ -17,6 +17,8 @@
       <ul class="nav navbar-nav">
         <li><a href="#0">Snippets</a></li>
         <li><a href="#0">Tags</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
           <li><%= link_to current_user.display_name, current_user %></li>
           <li><%= link_to "Log out", logout_path, method: :delete %></li>
