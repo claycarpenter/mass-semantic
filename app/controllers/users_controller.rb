@@ -11,6 +11,7 @@ class UsersController < ApplicationController
     logger.debug "data: #{oauth_data}"
 
     @user = User.new
+    @user.username = oauth_data["username"]
     @user.display_name = oauth_data["full_name"]
     @user.email = oauth_data["email"]
 
@@ -63,6 +64,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:display_name, :email)
+      params.require(:user).permit(:display_name, :email, :username)
     end
 end
