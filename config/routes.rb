@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'users/new'
-  get 'users/:id' => 'users#show', as: :user
+  resources :users, :path => 'users'
 
   get 'snippets/show'
 
