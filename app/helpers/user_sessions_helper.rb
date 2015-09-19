@@ -18,6 +18,20 @@ module UserSessionsHelper
     session.delete :user_id
   end
 
+  def store_oauth(oauth_data)
+    Rails.logger.debug "Storing OAuth data: #{oauth_data.inspect}"
+
+    session[:oauth] = oauth_data
+  end
+
+  def get_oauth
+    session[:oauth]
+  end
+
+  def has_oauth?
+    (session.has_key?(:oauth)) && (not session[:oauth]["access_token"].nil?)
+  end
+
   class OAuthData
     attr_accessor :access_token, :oauth_service, :user_id, :username, :full_name, :email
   end
@@ -25,10 +39,10 @@ module UserSessionsHelper
   class GitHubOAuthHandler
     def get_access_token(callback_code)
       # Acquire access token by sending callback code back to GitHub
+      options_hash = { :client_id => Global.application.oauth.github.client_id,         :client_secret => Global.application.oauth.github.secret_key,         :code => callback_code }
+
       result = RestClient.post('https://github.com/login/oauth/access_token',
-                              {:client_id => Global.application.oauth.github.client_id,
-                               :client_secret => Global.application.oauth.github.secret_key,
-                               :code => callback_code},
+                              options_hash,
                                :accept => :json)
 
       access_token = JSON.parse(result)['access_token']
