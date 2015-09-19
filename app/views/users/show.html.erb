@@ -4,3 +4,7 @@
 <p>
   Display name: <%= @user.display_name %>
 </p>
+
+<p>
+  <%= link_to "Delete Profile", @user, :method => :delete %>
+</p>

@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
     if @user.save
       log_in @user
-      
+
       redirect_to @user
     else
       render "new"
@@ -43,6 +43,22 @@ class UsersController < ApplicationController
     id = params[:id]
 
     @user = User.find(id)
+  end
+
+  def destroy
+    id = params[:id].to_i
+
+    logger.debug "Looking for user #{id}"
+    logger.debug "Current user is: #{current_user.inspect}"
+
+    if (id == current_user.id)
+      logger.debug "Deleting user #{current_user.inspect}"
+      User.delete(id)
+
+      log_out
+    end
+
+    redirect_to "/"
   end
 
   private
