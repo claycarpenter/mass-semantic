@@ -36,6 +36,7 @@ class UsersController < ApplicationController
 
       redirect_to @user
     else
+      # Persistence/validation errors; render new page with errors.
       render "new"
     end
   end
