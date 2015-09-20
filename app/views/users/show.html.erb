@@ -1,14 +1,30 @@
 
-<h1>User Show</h1>
+<%# FIXME: This is largely repeated between user pages. %>
 
-<p>
-  Display name: <%= @user.display_name %>
-</p>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <h1><%= @user.display_name %></h1>
 
-<p>
-  <%= link_to "Edit Profile", edit_user_path(@user) %>
-</p>
+    <p>
+      <b>Username:</b>
+      <span>
+        <%= @user.username %>
+      </span>
+    </p>
 
-<p>
-  <%= link_to "Delete Profile", @user, :method => :delete %>
-</p>
+    <p>
+      <b>Email:</b>
+      <span>
+        <%= @user.email %>
+      </span>
+    </p>
+
+    <p>
+      <%= link_to "Edit Profile", edit_user_path(@user) %>
+    </p>
+
+    <p>
+      <%= link_to "Delete Profile", @user, :method => :delete %>
+    </p>
+  </div>
+</div>
