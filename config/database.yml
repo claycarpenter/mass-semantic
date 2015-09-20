@@ -18,9 +18,3 @@ test:
   database: masssemantic_test
   username: ms_test
   password: ms_test
-
-production:
-  <<: *default
-  database: masssemantic
-  username: <%= ENV['MS_PROD_DB_USER'] %>
-  password: <%= ENV['MS_PROD_DB_PASSWORD'] %>
