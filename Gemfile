@@ -4,6 +4,10 @@ ruby "2.0.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 
+# Load dotenv _before_ Global, so that Global can pick up environment variables
+# set by dotenv.
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
+
 # Use Global for configuration data parsing/loading
 gem 'global'
 
