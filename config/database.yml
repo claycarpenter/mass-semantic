@@ -6,15 +6,11 @@ default: &default
 
 development:
   <<: *default
-  database: masssemantic_dev
-  username: ms_dev
-  password: ms_dev
+  url: <%= ENV['DATABASE_URL'] || "postgres://ms_dev:ms_dev@localhost/masssemantic_dev" %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: masssemantic_test
-  username: ms_test
-  password: ms_test
+  url: <%= ENV['DATABASE_URL'] || "postgres://ms_test:ms_test@localhost/masssemantic_test" %>
