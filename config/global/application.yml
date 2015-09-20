@@ -3,36 +3,19 @@ defaults: &defaults
   oauth: &oauth
     github: &github
       callback: /usersessions/github/callback
+      client_id: <%= ENV['GITHUB_CLIENT_ID'] %>
+      secret_key: <%= ENV['GITHUB_CLIENT_SECRET'] %>
     stackex: &stackex
       callback: /usersessions/stackex/callback
+      client_id: <%= ENV['STACKEX_CLIENT_ID'] %>
+      client_key: <%= ENV['STACKEX_CLIENT_KEY'] %>
+      secret_key: <%= ENV['STACKEX_CLIENT_SECRET'] %>
 
 development:
   <<: *defaults
-  oauth:
-    <<: *oauth
-    github:
-      <<: *github
-      client_id: 845418bb1a00b1aaf8c7
-      secret_key: <%= ENV['GITHUB_CLIENT_SECRET'] %>
-    stackex:
-      <<: *stackex
-      client_id: 5468
-      client_key: 2xLiDuoyp)zKwxapJzzO1g((
-      secret_key: <%= ENV['STACKEX_CLIENT_SECRET'] %>
 
 test:
   <<: *defaults
 
 production:
   <<: *defaults
-  oauth:
-    <<: *oauth
-    github:
-      <<: *github
-      client_id: <%= ENV['GITHUB_CLIENT_ID'] %>
-      secret_key: <%= ENV['GITHUB_CLIENT_SECRET'] %>
-    stackex:
-      <<: *stackex
-      client_id: <%= ENV['STACKEX_CLIENT_ID'] %>
-      client_key: <%= ENV['STACKEX_CLIENT_KEY'] %>
-      secret_key: <%= ENV['STACKEX_CLIENT_SECRET'] %>
