@@ -19,12 +19,14 @@
       </span>
     </p>
 
-    <p>
-      <%= link_to "Edit Profile", edit_user_path(@user) %>
-    </p>
+    <% if @user.id == current_user.id %>
+      <p>
+        <%= link_to "Edit Profile", edit_user_path(@user) %>
+      </p>
 
-    <p>
-      <%= link_to "Delete Profile", @user, :method => :delete %>
-    </p>
+      <p>
+        <%= link_to "Delete Profile", @user, :method => :delete %>
+      </p>
+    <% end %>
   </div>
 </div>
