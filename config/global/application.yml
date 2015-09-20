@@ -25,3 +25,14 @@ test:
 
 production:
   <<: *defaults
+  oauth:
+    <<: *oauth
+    github:
+      <<: *github
+      client_id: <%= ENV['GITHUB_CLIENT_ID'] %>
+      secret_key: <%= ENV['GITHUB_CLIENT_SECRET'] %>
+    stackex:
+      <<: *stackex
+      client_id: <%= ENV['STACKEX_CLIENT_ID'] %>
+      client_key: <%= ENV['STACKEX_CLIENT_KEY'] %>
+      secret_key: <%= ENV['STACKEX_CLIENT_SECRET'] %>
