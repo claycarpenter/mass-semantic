@@ -1,20 +1,27 @@
-<h1>Create A New User Profile</h1>
 
-<%= form_for(@user) do |f| %>
-  <%= render 'partials/user_error_messages' %>
+<%# FIXME: This is largely repeated between new, edit pages. %>
 
-  <p>
-    <%= f.label :username %>
-    <%= f.text_field :username %>
-  </p>
-  <p>
-    <%= f.label :display_name %>
-    <%= f.text_field :display_name %>
-  </p>
-  <p>
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </p>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <h1>Create A New User Profile</h1>
 
-  <%= f.submit "Create my account", class: "btn btn-primary" %>
-<% end %>
+    <%= form_for(@user) do |f| %>
+      <%= render 'partials/user_error_messages' %>
+
+      <p class="form-group">
+        <%= f.label :username %>
+        <%= f.text_field :username, :class => "form-control" %>
+      </p>
+      <p class="form-group">
+        <%= f.label :display_name %>
+        <%= f.text_field :display_name, :class => "form-control" %>
+      </p>
+      <p class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, :class => "form-control" %>
+      </p>
+
+      <%= f.submit "Create my account", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
