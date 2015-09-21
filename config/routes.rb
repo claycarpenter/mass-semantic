@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :snippets
   resources :users, :path => 'users'
-
-  get 'snippets/show'
 
   get 'profiles/public'
 

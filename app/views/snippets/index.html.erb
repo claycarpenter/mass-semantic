@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Snippets</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Code</th>
+      <th>Expl md</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @snippets.each do |snippet| %>
+      <tr>
+        <td><%= snippet.title %></td>
+        <td><code><%= snippet.code %></code></td>
+        <td><%= snippet.expl_md %></td>
+        <td><%= snippet.user.display_name %></td>
+        <td><%= link_to 'Show', snippet %></td>
+        <td><%= link_to 'Edit', edit_snippet_path(snippet) %></td>
+        <td><%= link_to 'Destroy', snippet, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Snippet', new_snippet_path %>

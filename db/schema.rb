@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150919210428) do
+ActiveRecord::Schema.define(version: 20150921164416) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "snippets", force: :cascade do |t|
+    t.string   "title"
+    t.string   "code"
+    t.string   "expl_md"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "snippets", ["user_id"], name: "index_snippets_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "display_name"
@@ -29,4 +40,5 @@ ActiveRecord::Schema.define(version: 20150919210428) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
+  add_foreign_key "snippets", "users"
 end
