@@ -10,10 +10,21 @@ namespace :db do
   desc 'Populates the database with sample data'
   task populate_sample_data: :environment do
     # 10.times { User.create!(email: Faker::Internet.email) }
-    me = User.create(display_name: "Clay", gh_user_id: "claycarpenter")
+    me = User.create(
+      display_name: "Clay Carpenter",
+      gh_user_id: "claycarpenter",
+      email: "claycarpenter@gmail.com",
+      username: "claycarpenter")
     me.save
 
-    puts "User id: #{me.id}"
-    puts "All saved?"
+    5.times do |i|
+      snippet = Snippet.create(
+        title: "Snippet #{i}",
+        code: "<p>Lorem ipsum #{i}</p>",
+        expl_md: "This is the another snippet.",
+        user: me
+      )
+      snippet.save
+    end
   end
 end
