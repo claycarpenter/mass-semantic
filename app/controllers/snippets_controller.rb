@@ -14,6 +14,14 @@ class SnippetsController < ApplicationController
 
   # GET /snippets/new
   def new
+    if !logged_in?
+      redirect_to login_path
+
+      return
+    end
+
+    logger.debug "New snippet?"
+
     @snippet = Snippet.new
   end
 
