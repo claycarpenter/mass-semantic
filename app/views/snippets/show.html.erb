@@ -20,5 +20,16 @@
   <%= link_to @snippet.user.display_name, @snippet.user %>
 </p>
 
+<h2>Comments</h2>
+
+<% @snippet.comments.each do |comment| %>
+  <article>
+    <%= comment.body %>
+    <footer>
+      <cite><%= comment.user.display_name %></cite>
+    </footer>
+  </article>
+<% end %>
+
 <%= link_to 'Edit', edit_snippet_path(@snippet) %> |
 <%= link_to 'Back', snippets_path %>
