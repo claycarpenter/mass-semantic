@@ -18,6 +18,14 @@ module UserSessionsHelper
     session.delete :user_id
   end
 
+  def require_login
+    unless logged_in?
+      flash[:error] = "You must be logged in to create or edit snippets."
+
+      redirect_to login_path
+    end
+  end
+
   def store_oauth(oauth_data)
     Rails.logger.debug "Storing OAuth data: #{oauth_data.inspect}"
 
