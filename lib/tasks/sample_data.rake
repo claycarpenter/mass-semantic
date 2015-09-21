@@ -27,6 +27,16 @@ namespace :db do
         user: me
       )
       snippet.save
+
+      (Random::rand(5)+1).times do
+        comment = Comment.create(
+          user: me,
+          snippet: snippet,
+          body: lorem.paragraph
+        )
+
+        comment.save
+      end
     end
   end
 end
