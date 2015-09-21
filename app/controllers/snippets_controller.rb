@@ -1,5 +1,6 @@
 class SnippetsController < ApplicationController
   before_action :set_snippet, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:new, :create, :edit, :update]
 
   # GET /snippets
   # GET /snippets.json
@@ -14,14 +15,6 @@ class SnippetsController < ApplicationController
 
   # GET /snippets/new
   def new
-    if !logged_in?
-      redirect_to login_path
-
-      return
-    end
-
-    logger.debug "New snippet?"
-
     @snippet = Snippet.new
   end
 
