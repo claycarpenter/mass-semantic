@@ -60,6 +60,9 @@ group :development, :test do
 
   # Quiet asset serve logging.
   gem 'quiet_assets'
+
+  # Debug data creator
+  gem 'faker'
 end
 
 group :production do
