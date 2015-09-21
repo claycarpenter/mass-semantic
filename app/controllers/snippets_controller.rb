@@ -27,6 +27,9 @@ class SnippetsController < ApplicationController
   def create
     @snippet = Snippet.new(snippet_params)
 
+    # Assign current user to snippet (as author)
+    @snippet.user = current_user
+
     respond_to do |format|
       if @snippet.save
         format.html { redirect_to @snippet, notice: 'Snippet was successfully created.' }
@@ -70,6 +73,6 @@ class SnippetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def snippet_params
-      params.require(:snippet).permit(:title, :code, :expl_md, :user_id)
+      params.require(:snippet).permit(:title, :code, :expl_md)
     end
 end
