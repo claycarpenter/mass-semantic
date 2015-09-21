@@ -2,6 +2,8 @@ class Snippet < ActiveRecord::Base
   # Relations
   belongs_to :user
 
+  has_many :comments
+
   # Validations
   validates :title,
     presence: true,
