@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :snippets
+  resources :snippets do
+    resources :comments, shallow: true
+  end
+  
   resources :users, :path => 'users'
 
   get 'profiles/public'
