@@ -17,6 +17,9 @@
       <ul class="nav navbar-nav">
         <li><%= link_to "Snippets", snippets_path %></li>
         <li><a href="#0">Tags</a></li>
+        <% if logged_in? %>
+          <li><%= link_to "Add Snippet", new_snippet_path %></li>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
