@@ -55,16 +55,6 @@ class SnippetsController < ApplicationController
     end
   end
 
-  # DELETE /snippets/1
-  # DELETE /snippets/1.json
-  def destroy
-    @snippet.destroy
-    respond_to do |format|
-      format.html { redirect_to snippets_url, notice: 'Snippet was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_snippet
