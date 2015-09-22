@@ -1,21 +1,12 @@
 class AddDeviseToUsers < ActiveRecord::Migration
   def self.up
-    change_table(:users) do |t|
-      ## Trackable
-      t.integer  :sign_in_count, default: 0, null: false
-      t.datetime :current_sign_in_at
-      t.datetime :last_sign_in_at
-      t.inet     :current_sign_in_ip
-      t.inet     :last_sign_in_ip
+    # Add Omniauth properties
+    add_column :users, :provider, :string, null: false
+    add_column :users, :uid, :string, null: false
 
-      ## Confirmable
-      t.string   :confirmation_token
-      t.datetime :confirmed_at
-      t.datetime :confirmation_sent_at
-      t.string   :unconfirmed_email # Only if using reconfirmable
-    end
-
-    # add_index :users, :email,                unique: true
+    # Remove old custom Oauth properties
+    remove_column :users, :gh_user_id
+    remove_column :users, :se_user_id
   end
 
   def self.down
