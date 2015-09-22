@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_login, only: [:create]
+  before_action :require_login, only: [:create, :delete]
 
   def create
     @snippet = Snippet.find(params[:snippet_id])
@@ -11,11 +11,22 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    # Find comment
     comment = Comment.find(params[:id])
+
+    # Verify comment author is current user. If not, redirect to login.
+    unless comment.user = current_user
+      flash[:error] = "You don't have permission to delete that comment."
+      redirect_to login_path
+
+      return
+    end
+
+    # Delete comment
     comment.delete
 
-    snippet = comment.snippet
-    redirect_to snippet_path(snippet)
+    # Redirect user back to parent snippet
+    redirect_to snippet_path(comment.snippet)
   end
 
   private
