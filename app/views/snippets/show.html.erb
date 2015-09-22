@@ -26,7 +26,9 @@
   <article>
     <%= comment.body %>
     <footer>
-      <cite><%= comment.user.display_name %></cite>
+      <cite>
+        <%= link_to comment.user.display_name, comment.user %>
+      </cite>
     </footer>
   </article>
 <% end %>
