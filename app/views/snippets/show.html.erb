@@ -29,7 +29,9 @@
       <cite>
         <%= link_to comment.user.display_name, comment.user %>
       </cite>
-      <%= link_to 'delete', comment_path(comment), :method => :delete %>
+      <% if current_user == comment.user %>
+        <%= link_to 'delete', comment_path(comment), :method => :delete %>
+      <% end %>
     </footer>
   </article>
 <% end %>
