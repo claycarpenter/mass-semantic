@@ -14,8 +14,12 @@ gem 'global'
 # REST client
 gem 'rest-client'
 
-# Devise (auth, oauth)
+# Devise & Omniauth (auth, oauth)
 gem 'devise'
+gem 'omniauth'
+
+# Omniauth support for GitHub OAuth service
+gem 'omniauth-github'
 
 # Use Bootstrap (Sass version)
 gem 'bootstrap-sass', '~> 3.3.5'
