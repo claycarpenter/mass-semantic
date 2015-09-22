@@ -29,6 +29,7 @@
       <cite>
         <%= link_to comment.user.display_name, comment.user %>
       </cite>
+      <%= link_to 'delete', comment_path(comment), :method => :delete %>
     </footer>
   </article>
 <% end %>

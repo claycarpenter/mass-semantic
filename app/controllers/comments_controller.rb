@@ -10,6 +10,14 @@ class CommentsController < ApplicationController
     redirect_to snippet_path(@snippet)
   end
 
+  def destroy
+    comment = Comment.find(params[:id])
+    comment.delete
+
+    snippet = comment.snippet
+    redirect_to snippet_path(snippet)
+  end
+
   private
     def comment_params
       params.require(:comment).permit(:body)
