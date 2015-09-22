@@ -14,6 +14,9 @@ gem 'global'
 # REST client
 gem 'rest-client'
 
+# Devise (auth, oauth)
+gem 'devise'
+
 # Use Bootstrap (Sass version)
 gem 'bootstrap-sass', '~> 3.3.5'
 
