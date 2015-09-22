@@ -31,16 +31,19 @@
   </article>
 <% end %>
 
-<h3>Add Comment</h3>
+<%# Only show Add Comment section to logged in users %>
+<% if logged_in? %>
+  <h3>Add Comment</h3>
 
-<%= form_for([@snippet, @snippet.comments.build]) do |f| %>
-  <p>
-    <%= f.label :body %>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
+  <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
+    <p>
+      <%= f.label :body %>
+      <%= f.text_area :body %>
+    </p>
+    <p>
+      <%= f.submit %>
+    </p>
+  <% end %>
 <% end %>
 
 <%= link_to 'Edit', edit_snippet_path(@snippet) %> |
