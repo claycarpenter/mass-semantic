@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :omniauthable, :registerable,
-         :trackable, :validatable, :confirmable
+  # These modules will determine what functionality Omniauth provides
+  devise :registerable, :omniauthable, :omniauth_providers => [:github]
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_USERNAME_REGEX = /\A[a-z0-9]{1}[\w]+[a-z0-9]{1}\z/i
@@ -18,4 +16,40 @@ class User < ActiveRecord::Base
     length: {maximum: 250},
     format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
+
+  def self.from_omniauth(auth)
+    Rails.logger.debug "Looking for user..."
+
+    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
+      Rails.logger.debug "Auth: #{auth.inspect}"
+      Rails.logger.debug "Auth.info: #{auth.info.inspect}"
+
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.email = auth.info.email
+      user.display_name = auth.info.name
+      user.username = auth.info.nickname
+    end
+
+    return user;
+  end
+
+  def self.new_with_session(params, session)
+    Rails.logger.debug "Creating new user from session data?"
+
+    super.tap do |user|
+      if data = session["devise.github_data"] && session["devise.github_data"]["extra"]["raw_info"]
+        Rails.logger.debug "Incoming data #{data.inspect}"
+        Rails.logger.debug "Hydrating user from session: #{user.inspect}"
+
+        user.uid = data["id"] if user.uid.blank?
+        user.provider = "github" if user.provider.blank?
+        user.email = data["email"] if user.email.blank?
+        user.username = data["login"] if user.username.blank?
+        user.display_name = data["name"] if user.display_name.blank?
+
+        Rails.logger.debug "Done hydrating user from session: #{user.inspect}"
+      end
+    end
+  end
 end
