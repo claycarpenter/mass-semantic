@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :require_login, only: [:create]
+
   def create
     @snippet = Snippet.find(params[:snippet_id])
     @comment = @snippet.comments.create(comment_params)
