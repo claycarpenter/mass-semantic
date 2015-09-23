@@ -3,6 +3,12 @@ Rails.application.routes.draw do
   # Configure Omniauth callbacks to target OAuthCallbacks controller.
   devise_for :users, :controllers => { :omniauth_callbacks => "oauthcallbacks" }
 
+  # Devise sign in and sign out routes.
+  devise_scope :user do
+    get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
+    delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
+
   resources :snippets do
     resources :comments, shallow: true
   end
