@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     :controllers => {
       :sessions => "users/sessions",
       :registrations => "users/registrations",
-      :omniauth_callbacks => "oauthcallbacks"
+      :omniauth_callbacks => "users/omniauth_callbacks"
     }
 
   # Devise sign in and sign out routes.
