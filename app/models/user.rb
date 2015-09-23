@@ -44,9 +44,9 @@ class User < ActiveRecord::Base
 
         user.uid = data["id"] if user.uid.blank?
         user.provider = "github" if user.provider.blank?
-        user.email = data["email"] if user.email.blank?
-        user.username = data["login"] if user.username.blank?
-        user.display_name = data["name"] if user.display_name.blank?
+        user.email = data["email"] if user.email.nil?
+        user.username = data["login"] if user.username.nil?
+        user.display_name = data["name"] if user.display_name.nil?
 
         Rails.logger.debug "Done hydrating user from session: #{user.inspect}"
       end
