@@ -70,10 +70,10 @@ class UsersController < ApplicationController
       logger.debug "Deleting user #{current_user.inspect}"
       User.delete(id)
 
-      log_out
+      sign_out(current_user)
     end
 
-    redirect_to "/"
+    redirect_to root_path
   end
 
   private
