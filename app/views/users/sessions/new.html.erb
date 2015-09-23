@@ -1,4 +1,32 @@
-<h2>Log in</h2>
+<section class="container">
+  <h1>Login or Register</h1>
 
+  <p>Users get the following benefits:</p>
+  <ul>
+    <li>Add and edit markup samples</li>
+    <li>Vote on the best markup samples</li>
+    <li>Save markup samples to your own personal collection</li>
+    <li>Join in the discussion</li>
+  </ul>
 
-<%= render "users/shared/links" %>
+  <div class="row">
+    <div class="col-xs-12">
+      <p>Login or register with either your GitHub or Stack Exchange account.</p>
+    </div>
+    <div class="col-sm-6">
+      <h2>GitHub</h2>
+      <%= link_to "Sign In",
+        omniauth_authorize_path(resource_name, :github),
+        :class => "btn btn-lg btn-primary" %>
+      </a>
+    </div>
+    <div class="col-sm-6">
+      <h2>Stack Exchange</h2>
+      <a
+        href="#0"
+        class="btn btn-lg btn-primary disabled">
+        Sign Up
+      </a>
+    </div>
+  </div>
+</section>
