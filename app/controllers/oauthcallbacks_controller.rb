@@ -1,4 +1,4 @@
-class OAuthCallbacksController < Devise::OmniauthCallbacksController
+class OauthcallbacksController < Devise::OmniauthCallbacksController
   def github
     logger.debug "request.env inspect: #{request.env["omniauth.auth"].inspect}"
 
