@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  # Configure Omniauth callbacks to target OAuthCallbacks controller.
+  devise_for :users, :controllers => { :omniauth_callbacks => "oauthcallbacks" }
+
   resources :snippets do
     resources :comments, shallow: true
   end
-  
+
+  # TODO: Is this added path arg necessary?
   resources :users, :path => 'users'
 
   get 'profiles/public'
