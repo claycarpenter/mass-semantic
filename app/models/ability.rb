@@ -5,8 +5,11 @@ class Ability
     # Ensure a user instance is always present, even for guest users
     user ||= User.new
 
-    # Users can only update their own profile.
-    can :update, User, :id => user.id
+    # Allow show, index on users for everyone.
+    can [:show, :index], User
+
+    # Users can only modify their own profile.
+    can [:edit, :update, :destroy, :delete], User, :id => user.id
 
     # Only author can edit or delete their own comment.
     can [:edit, :update, :destroy, :delete], Comment, :user_id => user.id
