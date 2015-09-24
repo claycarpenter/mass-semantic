@@ -17,8 +17,11 @@ class Ability
     # Allow show, index on comments for everyone.
     can [:show, :index], Comment
 
-    # Only real user/non-guest can author a new snippet.
-    can :create, Snippet if user.persisted?
+    # Allow show, index on snippets for everyone.
+    can [:show, :index], Snippet
+    # Only real user/non-guest can author a new snippet or update/edit
+    # an existing snippet.
+    can [:new, :create, :edit, :update], Snippet if user.persisted?
 
     # Define abilities for the passed in user here. For example:
     #

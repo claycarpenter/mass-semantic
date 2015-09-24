@@ -1,6 +1,7 @@
 class SnippetsController < ApplicationController
-  before_action :set_snippet, only: [:show, :edit, :update, :destroy]
-  before_action :require_login, only: [:new, :create, :edit, :update]
+  # before_action :set_snippet, only: [:show, :edit, :update, :destroy]
+  # before_action :require_login, only: [:new, :create, :edit, :update]
+  load_and_authorize_resource
 
   # GET /snippets
   # GET /snippets.json
