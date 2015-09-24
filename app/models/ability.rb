@@ -8,6 +8,9 @@ class Ability
     # Users can only update their own profile.
     can :update, User, :id => user.id
 
+    # Only author can edit or delete their own comment.
+    can [:update, :delete], Comment, :user_id => user.id
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

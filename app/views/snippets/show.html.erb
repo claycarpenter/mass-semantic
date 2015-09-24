@@ -29,7 +29,10 @@
       <cite>
         <%= link_to comment.user.display_name, comment.user %>
       </cite>
-      <% if current_user == comment.user %>
+      <% if can? :update, comment %>
+        <%= link_to 'edit', edit_comment_path(comment) %>
+      <% end %>
+      <% if can? :delete, comment %>
         <%= link_to 'delete', comment_path(comment), :method => :delete %>
       <% end %>
     </footer>
