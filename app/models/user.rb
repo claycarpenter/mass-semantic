@@ -17,6 +17,18 @@ class User < ActiveRecord::Base
     format: {with: VALID_EMAIL_REGEX},
     uniqueness: {case_sensitive: false}
 
+  validates :display_name,
+    length: {maximum: 50}
+
+  # Both uid and provider are required. Neither must be unique on their own,
+  # but the combination must be unique.
+  validates :provider,
+    presence: true
+
+  validates :uid,
+    presence: true,
+    uniqueness: {:scope => :provider}
+
   def self.from_omniauth(auth)
     Rails.logger.debug "Looking for user..."
 
