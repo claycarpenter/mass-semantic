@@ -11,10 +11,10 @@ namespace :db do
   task populate_sample_data: :environment do
     lorem = Faker::Lorem
 
-    # 10.times { User.create!(email: Faker::Internet.email) }
     me = User.create(
       display_name: "Clay Carpenter",
-      gh_user_id: "claycarpenter",
+      uid: "550902",
+      provider: "github",
       email: "claycarpenter@gmail.com",
       username: "claycarpenter")
     me.save
