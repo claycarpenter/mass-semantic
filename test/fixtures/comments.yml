@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 
-  snippet_id: 
-  body: MyText
+  user_id:
+  snippet_id:
+  body_md: MyText
 
 two:
-  user_id: 
-  snippet_id: 
-  body: MyText
+  user_id:
+  snippet_id:
+  body_md: MyText
