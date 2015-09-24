@@ -35,14 +35,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  # Authentication routes
-  get 'login' => 'user_sessions#new'
-  delete 'logout' => 'user_sessions#destroy'
-  get 'usersessions/github' => 'user_sessions#github'
-  get 'usersessions/github/callback' => 'user_sessions#github_callback'
-  get 'usersessions/stackex' => 'user_sessions#stackex'
-  get 'usersessions/stackex/callback' => 'user_sessions#stackex_callback'
-
   # Semantic routes
   get 'semantic' => 'semantic#benefits'
 
