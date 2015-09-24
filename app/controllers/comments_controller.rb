@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_login, only: [:create, :delete]
+  load_and_authorize_resource
 
   def create
     @snippet = Snippet.find(params[:snippet_id])

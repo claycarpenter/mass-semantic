@@ -9,10 +9,13 @@ class Ability
     can :update, User, :id => user.id
 
     # Only author can edit or delete their own comment.
-    can [:update, :delete], Comment, :user_id => user.id
+    can [:edit, :update, :destroy, :delete], Comment, :user_id => user.id
 
     # Only real user/non-guest can author a new comment.
     can :create, Comment if user.persisted?
+
+    # Allow show, index on comments for everyone.
+    can [:show, :index], Comment
 
     # Only real user/non-guest can author a new snippet.
     can :create, Snippet if user.persisted?
