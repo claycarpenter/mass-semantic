@@ -37,7 +37,7 @@
 <% end %>
 
 <%# Only show Add Comment section to logged in users %>
-<% if logged_in? %>
+<% if user_signed_in? %>
   <h3>Add Comment</h3>
 
   <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
