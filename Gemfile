@@ -21,6 +21,9 @@ gem 'omniauth'
 # Omniauth support for GitHub OAuth service
 gem 'omniauth-github'
 
+# CanCanCan authorization support.
+gem 'cancancan'
+
 # Use Bootstrap (Sass version)
 gem 'bootstrap-sass', '~> 3.3.5'
 
