@@ -34,7 +34,7 @@
 
       <% @snippet.comments.each do |comment| %>
         <article>
-          <%= comment.body %>
+          <%= comment.body_md %>
           <footer>
             <cite>
               <%= link_to comment.user.display_name, comment.user %>
@@ -55,8 +55,8 @@
 
         <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
           <p>
-            <%= f.label :body %>
-            <%= f.text_area :body %>
+            <%= f.label :body_md %>
+            <%= f.text_area :body_md %>
           </p>
           <p>
             <%= f.submit %>

@@ -32,7 +32,7 @@ namespace :db do
         comment = Comment.create(
           user: me,
           snippet: snippet,
-          body: lorem.paragraph
+          body_md: lorem.paragraph
         )
 
         comment.save
