@@ -2,7 +2,7 @@ defaults: &defaults
   name: Mass Semantic
   oauth: &oauth
     github: &github
-      callback: /usersessions/github/callback
+      callback: /users/auth/github/callback
       client_id: <%= ENV['GITHUB_CLIENT_ID'] %>
       secret_key: <%= ENV['GITHUB_CLIENT_SECRET'] %>
     stackex: &stackex
