@@ -1,58 +1,72 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @snippet.title %>
-</p>
+<div class="row">
+  <div class="col-sm-10 col-md-9">
+    <%# Snippet %>
+    <article>
+      <header>
+        <h1><%= @snippet.title %></h1>
+      </header>
+      <section>
+        <h2>Code</h2>
+        <pre><code><%= @snippet.code %></code></pre>
+      </section>
+      <section>
+        <h2>Explanation</h2>
+        <%= @snippet.expl_md %>
+      </section>
+      <footer class="row">
+        <div class="col-sm-8 col-xs-12">
+          <%= link_to 'Edit', edit_snippet_path(@snippet), :class => "btn btn-small btn-default" %>
+        </div>
+        <div class="col-sm-4 col-xs-12 text-right">
+          <cite>
+            Authored by <%= link_to @snippet.user.display_name, @snippet.user %>
+          </cite>
+        </div>
+      </footer>
+    </article>
 
-<p>
-  <strong>Code:</strong>
-  <%= @snippet.code %>
-</p>
+    <%# Snippet Comments %>
+    <%# TODO: What's the best tag for this content? %>
+    <aside>
+      <h2>Comments</h2>
 
-<p>
-  <strong>Expl md:</strong>
-  <%= @snippet.expl_md %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= link_to @snippet.user.display_name, @snippet.user %>
-</p>
-
-<h2>Comments</h2>
-
-<% @snippet.comments.each do |comment| %>
-  <article>
-    <%= comment.body %>
-    <footer>
-      <cite>
-        <%= link_to comment.user.display_name, comment.user %>
-      </cite>
-      <% if can? :update, comment %>
-        <%= link_to 'edit', edit_comment_path(comment) %>
+      <% @snippet.comments.each do |comment| %>
+        <article>
+          <%= comment.body %>
+          <footer>
+            <cite>
+              <%= link_to comment.user.display_name, comment.user %>
+            </cite>
+            <% if can? :update, comment %>
+              <%= link_to 'edit', edit_comment_path(comment) %>
+            <% end %>
+            <% if can? :delete, comment %>
+              <%= link_to 'delete', comment_path(comment), :method => :delete %>
+            <% end %>
+          </footer>
+        </article>
       <% end %>
-      <% if can? :delete, comment %>
-        <%= link_to 'delete', comment_path(comment), :method => :delete %>
+
+      <%# Only show Add Comment section to logged in users %>
+      <% if can? :create, Comment %>
+        <h3>Add Comment</h3>
+
+        <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
+          <p>
+            <%= f.label :body %>
+            <%= f.text_area :body %>
+          </p>
+          <p>
+            <%= f.submit %>
+          </p>
+        <% end %>
       <% end %>
-    </footer>
-  </article>
-<% end %>
-
-<%# Only show Add Comment section to logged in users %>
-<% if can? :create, Comment %>
-  <h3>Add Comment</h3>
-
-  <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
-    <p>
-      <%= f.label :body %>
-      <%= f.text_area :body %>
-    </p>
-    <p>
-      <%= f.submit %>
-    </p>
-  <% end %>
-<% end %>
-
-<%= link_to 'Edit', edit_snippet_path(@snippet) %> |
-<%= link_to 'Back', snippets_path %>
+    </aside>
+  </div>
+  <aside class="col-sm-2 col-md-3">
+    <h3>Stats</h3>
+    <p><i>Stats are not currently supported for snippets.</i></p>
+  </aside>
+</div>
