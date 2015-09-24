@@ -11,8 +11,11 @@ class Ability
     # Only author can edit or delete their own comment.
     can [:update, :delete], Comment, :user_id => user.id
 
-    # Only real user/non-guest can author new comment.
+    # Only real user/non-guest can author a new comment.
     can :create, Comment if user.persisted?
+
+    # Only real user/non-guest can author a new snippet.
+    can :create, Snippet if user.persisted?
 
     # Define abilities for the passed in user here. For example:
     #

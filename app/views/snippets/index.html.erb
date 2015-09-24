@@ -29,6 +29,6 @@
 
 <br>
 
-<% if user_signed_in? %>
+<% if can? :create, Snippet %>
   <%= link_to 'New Snippet', new_snippet_path %>
 <% end %>
