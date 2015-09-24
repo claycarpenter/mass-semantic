@@ -10,6 +10,11 @@ class CommentsController < ApplicationController
     redirect_to snippet_path(@snippet)
   end
 
+  # GET /comments/1
+  # GET /comments/1.json
+  def show
+  end
+
   def destroy
     # Find comment
     comment = Comment.find(params[:id])
