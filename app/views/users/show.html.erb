@@ -19,8 +19,7 @@
       </span>
     </p>
 
-    <%# FIXME: This logic should be in the controller, not the view %>
-    <% if !current_user.nil? && @user.id == current_user.id %>
+    <% if can? :update, @user %>
       <p>
         <%= link_to "Edit Profile", edit_user_path(@user) %>
       </p>
