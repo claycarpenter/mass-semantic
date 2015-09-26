@@ -60,6 +60,6 @@ class CommentsController < ApplicationController
 
   private
     def comment_params
-      params.require(:comment).permit(:body_md, :snippet_id)
+      params.require(:comment).permit(:body_md)
     end
 end
