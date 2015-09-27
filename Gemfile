@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 ruby "2.2.3"
 
+# Ensure a recent version of Bundler is available.
+gem 'bundler', '>= 1.8.4'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 
