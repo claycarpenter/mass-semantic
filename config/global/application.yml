@@ -10,6 +10,8 @@ defaults: &defaults
       client_id: <%= ENV['STACKEX_CLIENT_ID'] %>
       client_key: <%= ENV['STACKEX_CLIENT_KEY'] %>
       secret_key: <%= ENV['STACKEX_CLIENT_SECRET'] %>
+  security:
+    debug_log: <%= ENV['SECURITY_DEBUG_LOG'] || false %>
 
 development:
   <<: *defaults
