@@ -39,23 +39,18 @@ class CommentsController < ApplicationController
     end
   end
 
+  # DELETE /comments/1
+  # DELETE /comments/1.json
   def destroy
-    # Find comment
-    comment = Comment.find(params[:id])
-
-    # Verify comment author is current user. If not, redirect to login.
-    unless comment.user = current_user
-      flash[:error] = "You don't have permission to delete that comment."
-      redirect_to login_path
-
-      return
+    respond_to do |format|
+      if @comment.destroy
+        format.html { redirect_to snippet_path(@comment.snippet) }
+        format.json { head :no_content }
+      else
+        format.html { render :delete }
+        format.json { render json: @snippet.errors, status: :unprocessable_entity }
+      end
     end
-
-    # Delete comment
-    comment.delete
-
-    # Redirect user back to parent snippet
-    redirect_to snippet_path(comment.snippet)
   end
 
   private
