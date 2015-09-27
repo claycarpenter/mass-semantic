@@ -51,17 +51,22 @@
 
       <%# Only show Add Comment section to logged in users %>
       <% if can? :create, Comment %>
-        <h3>Add Comment</h3>
+        <div>
+          <button class="btn btn-default toggle-form">Add Comment</button>
 
-        <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
-          <p>
-            <%= f.label :body_md %>
-            <%= f.text_area :body_md %>
-          </p>
-          <p>
-            <%= f.submit %>
-          </p>
-        <% end %>
+          <div class="toggle-form-target">
+            <h3>Add Comment</h3>
+
+            <%= form_for([@snippet, @snippet.comments.build]) do |f| %>
+              <p>
+                <%= f.text_area :body_md %>
+              </p>
+              <p>
+                <%= f.submit %>
+              </p>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </aside>
   </div>
