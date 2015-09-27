@@ -52,9 +52,9 @@
       <%# Only show Add Comment section to logged in users %>
       <% if can? :create, Comment %>
         <div>
-          <button class="btn btn-default toggle-form">Add Comment</button>
+          <button class="btn btn-default toggle-form" data-toggle-target="#commentAddForm">Add Comment</button>
 
-          <div class="toggle-form-target">
+          <div id="commentAddForm" class="toggle-form-target">
             <h3>Add Comment</h3>
 
             <%= form_for([@snippet, @snippet.comments.build]) do |f| %>

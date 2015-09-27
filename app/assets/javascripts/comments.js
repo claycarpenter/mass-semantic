@@ -1,4 +1,17 @@
 
+// Simple toggle button widget.
+(function ($) {
+  $.fn.toggleButton = function () {
+    this.each(function () {
+      $(this).on('click', function () {
+        var target = $($(this).data('toggle-target'));
+        target.slideToggle();
+      });
+    });
+  };
+})(jQuery);
+
+(function ($) {
   function success (data) {
     console.log("Response received!");
   }
@@ -17,25 +30,19 @@
     });
   }
 
-$(function () {
+  $.fn.ajaxJsonForm = function () {
+    this.each(function () {
+      $(this).on('submit', function (evt) {
+        jsonFormPost($(this));
 
-  $(".btn.toggle-form").on('click', function (evt) {
-    var toggleFormTarget,
-        toggleForm;
-
-    toggleFormTarget = $(this).next('.toggle-form-target');
-    toggleForm = toggleFormTarget.find('form');
-
-    toggleFormTarget.slideToggle();
-
-    toggleForm.on('submit', function (evt) {
-      console.log($(this));
-
-      $(this).find('input[type=submit]').attr('disabled', 'disabled');
-
-      jsonFormPost($(this));
-
-      return false;
+        return false;
+      });
     });
-  });
+  };
+})(jQuery);
+
+$(function () {
+  $('.btn.toggle-form').toggleButton();
+
+  $('form').ajaxJsonForm();
 });
