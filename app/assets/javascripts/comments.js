@@ -12,28 +12,49 @@
 })(jQuery);
 
 (function ($) {
-  function success (data) {
-    console.log("Response received!");
-  }
+  $.fn.toggleButtonDisable = function (action) {
+    var isDisabling = false;
 
-  function jsonFormPost (form) {
-    console.log('Sending to:', form.attr('action'));
-    console.log('Sending payload:', JSON.stringify(form.serializeJSON()));
+    if (action === 'disable') {
+      isDisabling = true;
+    }
 
-    $.ajax({
-      url: form.attr('action'),
-      method: 'POST',
-      data: JSON.stringify(form.serializeJSON()),
-      contentType: "application/json; charset=utf-8",
-      success: success,
-      dataType: 'json'
+    this.each(function () {
+      if (isDisabling) {
+        $(this).addClass('disabled');
+        $(this).attr('disabled', 'disabled');
+      } else {
+        $(this).removeClass('disabled');
+        $(this).removeAttr('disabled');
+      }
     });
+  };
+})(jQuery);
+
+(function ($) {
+  function success (form, data) {
+    form.find('input[type="submit"]').toggleButtonDisable('enable');
   }
 
   $.fn.ajaxJsonForm = function () {
     this.each(function () {
       $(this).on('submit', function (evt) {
-        jsonFormPost($(this));
+        var form, url, formData;
+
+        form = $(this);
+        url = form.attr('action');
+        formData = JSON.stringify(form.serializeJSON());
+
+        form.find('input[type="submit"]').toggleButtonDisable('disable');
+
+        $.ajax({
+          url: url,
+          method: 'POST',
+          data: formData,
+          contentType: "application/json; charset=utf-8",
+          success: function (data) { success(form, data); },
+          dataType: 'json'
+        });
 
         return false;
       });
