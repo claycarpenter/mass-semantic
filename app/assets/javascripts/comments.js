@@ -32,13 +32,11 @@
 })(jQuery);
 
 (function ($) {
-  function success (form, data) {
-    form.find('input[type="submit"]').toggleButtonDisable('enable');
+  $.fn.ajaxJsonForm = function (options) {
+    var settings = $.extend({
+      success: function (form, data) { /* Do nothing */ }
+    }, options);
 
-    location.reload();
-  }
-
-  $.fn.ajaxJsonForm = function () {
     this.each(function () {
       $(this).on('submit', function (evt) {
         var form, url, formData;
@@ -49,12 +47,18 @@
 
         form.find('input[type="submit"]').toggleButtonDisable('disable');
 
+        function formSuccess (data) {
+          form.find('input[type="submit"]').toggleButtonDisable('enable');
+
+          settings.success(form, data);
+        }
+
         $.ajax({
           url: url,
           method: 'POST',
           data: formData,
           contentType: "application/json; charset=utf-8",
-          success: function (data) { success(form, data); },
+          success: formSuccess,
           dataType: 'json'
         });
 
@@ -67,5 +71,9 @@
 $(function () {
   $('.btn.toggle-form').toggleButton();
 
-  $('form').ajaxJsonForm();
+  $('form').ajaxJsonForm({
+    success: function (form, data) {
+      location.reload();
+    }
+  });
 });
