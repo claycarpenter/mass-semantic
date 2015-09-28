@@ -34,6 +34,8 @@
 (function ($) {
   function success (form, data) {
     form.find('input[type="submit"]').toggleButtonDisable('enable');
+
+    location.reload();
   }
 
   $.fn.ajaxJsonForm = function () {
